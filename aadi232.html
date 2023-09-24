@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 id="header-title">Item Lister</h1>
+            </div>
+            <div class="col-md-6 align-self-center">
+                <input type="text" class="form-control" id="filter" placeholder="Search Items...">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="main" class="card card-body">
+            <h2 class="title">Add Items</h2>
+            <form id="addForm" class="form-inline mb-3">
+                <input type="text" class="form-control mr-2" id="item" placeholder="Item Name">
+                <input type="text" class="form-control mr-2" id="description" placeholder="Item Description">
+                <input type="submit" class="btn btn-dark" value="Submit">
+            </form>
+            <h2 class="title">Items</h2>
+            <ul id="items" class="list-group">
+                <li class="list-group-item">Item 1</li>
+                <li class="list-group-item">Item 2</li>
+                <li class="list-group-item">Item 3</li>
+                <li class="list-group-item">Item 4</li>
+              </ul>
+        </div>
+    </div>
+    <script>
+        function storeItem(itemName, itemDescription) {
+            var userDetailsArray = localStorage.getItem('userDetails') ? JSON.parse(localStorage.getItem('userDetails')) : [];
+            userDetailsArray.push({ name: itemName, description: itemDescription });
+            localStorage.setItem('userDetails', JSON.stringify(userDetailsArray));
+        }
+        function loadItems() {
+            var userDetailsArray = localStorage.getItem('userDetails') ? JSON.parse(localStorage.getItem('userDetails')) : [];
+            userDetailsArray.forEach(function(user) {
+                addUserDetailsToList(user.name, user.description);
+            });
+        }
+
+        // Add user details to the list (without storing it again)
+        function addUserDetailsToList(userName, userDescription) {
+            var li = document.createElement('li');
+            li.className = 'list-group-item';
+
+            var userNameDiv = document.createElement('div');
+            userNameDiv.textContent = userName;
+            li.appendChild(userNameDiv);
+
+            var userDescriptionDiv = document.createElement('div');
+            userDescriptionDiv.textContent = userDescription;
+            li.appendChild(userDescriptionDiv);
+
+            var deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+            deleteBtn.appendChild(document.createTextNode('Delete'));
+
+            var editBtn = document.createElement('button');
+            editBtn.className = 'btn btn-primary btn-sm float-right edit';
+            editBtn.appendChild(document.createTextNode('Edit'));
+
+            li.appendChild(deleteBtn);
+            li.appendChild(editBtn);
+
+            itemList.appendChild(li);
+        }
+
+        // ...
+    </script>
+</body>
+</html>
