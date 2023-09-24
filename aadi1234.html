@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Form</title>
+</head>
+<body>
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br><br>
+        
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" required><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="dataDisplay">
+    </div>
+
+    <script>
+        const form = document.getElementById('myForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const dataDisplay = document.getElementById('dataDisplay');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get input values
+            const name = nameInput.value;
+            const email = emailInput.value;
+            const phone = phoneInput.value;
+
+            // Create an object to hold the data
+            const data = {
+                name,
+                email,
+                phone
+            };
+
+            // Store data in local storage
+            localStorage.setItem('userData', JSON.stringify(data));
+
+            // Display the data on the page
+            dataDisplay.innerHTML = `
+                <p>Name: ${name}</p>
+                <p>Email: ${email}</p>
+                <p>Phone: ${phone}</p>
+            `;
+
+            form.reset();
+        });
+
+        // Check if there is data in local storage and display it
+        const storedData = JSON.parse(localStorage.getItem('userData'));
+        if (storedData) {
+            dataDisplay.innerHTML = `
+                <p>Name: ${storedData.name}</p>
+                <p>Email: ${storedData.email}</p>
+                <p>Phone: ${storedData.phone}</p>
+            `;
+        }
+        window.addEventListener('load', function () {
+            localStorage.removeItem('userData');
+        });
+    </script>
+</body>
+</html>
+
