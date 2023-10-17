@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calc-1</title>
+</head>
+<body>
+    <h1 id="ss1"></h1>
+       <div class="keys">
+        <button>0</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+       </div>
+       <div class="op">
+        <button>+</button>
+        <button>/</button>
+        <button>-</button>
+        <button>*</button>
+       </div>
+       <button id="ss">=</button>
+       <button id="ss9">c</button>
+</body>
+</html>
+<script>
+    const qs=document.querySelectorAll(".keys>button");
+    const operators=document.querySelectorAll(".op>button");
+    const equal=document.getElementById("ss");
+    const head=document.getElementById("ss1");
+    const head2=document.getElementById("ss9");
+
+    let flag=true;
+    let  n1="",n2="",op="";
+    for(let i=0;i<qs.length;i++){
+           qs[i].addEventListener("click",function(){
+           if(flag){
+            n1+=qs[i].innerText;
+            head.innerText=n1;
+           }else{
+            n2+=qs[i].innerText;
+            head.innerText=n2;
+           }
+           })
+       }
+    for(let i=0;i<operators.length;i++){
+        operators[i].addEventListener("click",function(){
+    flag=false;
+    op=operators[i].innerText;
+        })
+    }
+    function calc(n1,n2,op){
+        if(op=="+"){
+            return Number(n1) + Number(n2);
+        }else if(op=="-"){
+            return Number(n1) - Number(n2);
+        }else if(op=="*"){
+            return Number(n1) * Number(n2);
+        }else {
+            return Number(n1)/Number(n2);
+        }
+    }
+    equal.addEventListener("click",function(){
+        head.innerText=calc(n1,n2,op);
+    })
+       head2.addEventListener("click",function(){
+            n1="";
+            n2="";
+            op="";
+            flag=true;
+            head.innerText="";
+       })
+</script>
